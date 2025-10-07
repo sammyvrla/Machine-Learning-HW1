@@ -31,13 +31,13 @@ class RNN(nn.Module):
 
     def forward(self, inputs):
         # [to fill] obtain hidden layer representation (https://pytorch.org/docs/stable/generated/torch.nn.RNN.html)
-        _, hidden = 
+        _, hidden = self.rnn(inputs)
         # [to fill] obtain output layer representations
-
-        # [to fill] sum over output 
-
+        outputLayer = self.W(hidden)
+        # [to fill] sum over output
+        outputLayer = outputLayer.sum(dim=0)
         # [to fill] obtain probability dist.
-
+        predicted_vector = self.softmax(outputLayer)
         return predicted_vector
 
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     # 2) Assign the input to vectors using pretrained word embeddings. We recommend any of {Word2Vec, GloVe, FastText}. Then, you do not train/update these embeddings.
     # 3) You do the same as 2) but you train (this is called fine-tuning) the pretrained embeddings further.
     # Option 3 will be the most time consuming, so we do not recommend starting with this
-
+    
     print("========== Vectorizing data ==========")
     model = RNN(50, args.hidden_dim)  # Fill in parameters
     # optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
@@ -175,8 +175,6 @@ if __name__ == "__main__":
             last_train_accuracy = trainning_accuracy
 
         epoch += 1
-
-
 
     # You may find it beneficial to keep track of training accuracy or training loss;
 
